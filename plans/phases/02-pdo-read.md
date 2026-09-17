@@ -42,7 +42,12 @@ data/tracker.sqlite     # created at runtime (gitignored)
 
 ### 2.3 — Create and seed the database
 
-- [ ] Apply the schema: `sqlite3 data/tracker.sqlite < schema.sql` (or run it through PDO)
+> **Environment note (recorded during Phase 00):** the `sqlite3` command-line tool is **not on PATH** on
+> this machine — only the PHP `sqlite3` *extension* is. So the shell commands below won't run as written.
+> Run `schema.sql` and `seed.sql` through a small PDO bootstrap script instead; it's the same code path
+> the app uses. See [00-setup.md § Environment Notes](./00-setup.md#environment-notes).
+
+- [ ] Apply the schema: `sqlite3 data/tracker.sqlite < schema.sql` — or, on this machine, run it through PDO
 - [ ] Write `seed.sql`: the 6 categories from the overview plus ~8 transactions across 2 months
 - [ ] Apply it: `sqlite3 data/tracker.sqlite < seed.sql`
 - [ ] Verify with `sqlite3 data/tracker.sqlite "SELECT COUNT(*) FROM transactions;"`
