@@ -154,6 +154,20 @@ Seed data: categories `Salary (income)`, `Freelance (income)`, `Groceries`, `Ren
 
 ## 5. Cross-Cutting Conventions
 
+Full detail in [`docs/code-standards.md`](../docs/code-standards.md).
+
+- **Documentation:** a PHPDoc block on **every** function — one-line imperative summary, then
+  `@param`/`@return` saying what the *type can't* (units, ranges, array shapes, what `null` means),
+  plus `@throws` where relevant. Comments explain **why**, never narrate *what*.
+- **Strict types:** `declare(strict_types=1);` as the first statement of every `.php` file.
+- **Typing:** every function declares parameter **and** return types.
+- **Formatting:** PSR-12 — 4 spaces, no tabs.
+- **Modern PHP:** target the installed version (8.3.14). Use `match`, arrow functions, named arguments,
+  nullsafe `?->`, `??=`, `str_contains`/`str_starts_with`, `array_is_list()`, `never`. No deprecated
+  functions. Class-based features (enums, `readonly`, attributes) wait for the OOP follow-up.
+- **Security:** validate every input at the boundary; allowlist, don't blocklist; escape on output,
+  never on input; fail closed; never leak internals to the browser. Full rules in
+  [`docs/code-standards.md`](../docs/code-standards.md) §2.
 - **Escaping:** every dynamic value printed to HTML goes through `e()`. No exceptions.
 - **SQL:** prepared statements for all values. Dynamic identifiers — only from a hardcoded whitelist array.
 - **Validation:** server-side always; client-side attributes are a convenience, never a gate.
@@ -162,6 +176,8 @@ Seed data: categories `Salary (income)`, `Freelance (income)`, `Groceries`, `Ren
 - **Destructive actions:** POST only, CSRF-verified, redirect after.
 - **File layout:** `src/` for logic, `public/` for views, `data/` for the DB file.
 - **`calculations.php` stays pure:** no `$pdo`, no `$_POST`, no `echo`. This keeps it testable in Phase 10.
+- **Ignore the `php-pro` skill's architecture advice:** no DTOs, service classes, DI, namespaces or
+  enums. Take only its language-level rules. See [`docs/code-standards.md`](../docs/code-standards.md) §4.
 
 ---
 

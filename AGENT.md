@@ -22,7 +22,8 @@ Read [`ProjectBrief.md`](./ProjectBrief.md) for the original brief.
 2. **[`plans/README.md`](./plans/README.md)** — locked decisions, schema, route map, conventions.
 3. **The current phase file** in [`plans/phases/`](./plans/phases) — its sub-phases are your task list.
 4. **This file** — the rules below.
-5. **[`docs/qa-checklist.md`](./docs/qa-checklist.md)** — if it exists, it's the manual test script.
+5. **[`docs/code-standards.md`](./docs/code-standards.md)** — how to write the code: DocBlocks, security, modern PHP. **Read this before writing any code.**
+6. **[`docs/qa-checklist.md`](./docs/qa-checklist.md)** — if it exists, it's the manual test script.
 
 Do not start writing code before doing 1–4.
 
@@ -34,6 +35,7 @@ Do not start writing code before doing 1–4.
 |---|---|
 | Know what to work on next | [`PROGRESS.md`](./PROGRESS.md) → Status Board |
 | Understand a phase's tasks | the phase file in `plans/phases/` |
+| Know **how to write the code** | [`docs/code-standards.md`](./docs/code-standards.md) |
 | Know an architectural decision | [`plans/README.md`](./plans/README.md) §1 |
 | See the DB schema | [`plans/README.md`](./plans/README.md) §3, then `schema.sql` |
 | Know a URL's purpose | [`plans/README.md`](./plans/README.md) §4 Route Map |
@@ -128,15 +130,25 @@ These are the rules that make this codebase what it is. **Break one and you've b
 | 9 | **`exit` after every `header('Location: ...')`.** | The rest of the script otherwise runs anyway. |
 | 10 | **`session_start()` before any output.** | Even a stray newline breaks it. |
 | 11 | **`data/` stays outside the docroot.** The docroot is `public/`. | The SQLite file must not be fetchable over HTTP. |
-| 12 | **No comments explaining *what* the code does.** Only *why*, when it isn't obvious. | Keeps the code readable as the learning artefact it is. |
+| 12 | **Every function has a PHPDoc block** — imperative summary, `@param`, `@return`, `@throws` where relevant. | This is a learning artefact; the *why* matters as much as the code. See [`docs/code-standards.md`](./docs/code-standards.md) §1. |
+| 13 | **Comments explain *why*, never *what*.** No line-by-line narration. | The code already says what it does. A comment earns its place by recording a decision, a constraint, or a trap. |
+| 14 | **Secure by default** — validate every input at the boundary, escape on output, allowlist rather than blocklist, fail closed. | See [`docs/code-standards.md`](./docs/code-standards.md) §2. |
+| 15 | **Write modern PHP** — target the installed version (8.3.14): `strict_types`, typed signatures, `match`, nullsafe, `str_contains`, `never`. No deprecated functions. | Language features now; class-based features (enums, `readonly`, attributes) wait for the OOP follow-up. See [`docs/code-standards.md`](./docs/code-standards.md) §3. |
 
 ---
 
 ## 7. Conventions
 
+Full detail in [`docs/code-standards.md`](./docs/code-standards.md).
+
+- **Documentation:** a PHPDoc block on **every** function. One-line imperative summary ("Format…",
+  "Validate…"), then `@param`/`@return` describing what the *type can't* — units, ranges, array
+  shapes, what `null` means — plus `@throws` where relevant. `src/` files carry a header block saying
+  what belongs in them.
 - **Naming:** `snake_case` for functions, `$snake_case` for variables, `kebab-case` for public PHP filenames.
 - **Type declarations:** every function declares parameter **and** return types.
-- **Indentation:** 4 spaces. No tabs.
+- **Strict types:** `declare(strict_types=1);` as the first statement of every `.php` file.
+- **Formatting:** PSR-12. 4 spaces. No tabs.
 - **Page shape (Phase 09+):** every page in `public/` is exactly:
 
   ```php
@@ -165,9 +177,11 @@ These are the rules that make this codebase what it is. **Break one and you've b
 # Serve the app (from the project root)
 php -S localhost:8000 -t public
 
-# Create the database from scratch
-sqlite3 data/tracker.sqlite < schema.sql
-sqlite3 data/tracker.sqlite < seed.sql
+# Create the database from scratch.
+# NOTE: the sqlite3 CLI is NOT on PATH on this machine - only the PHP extension is.
+# Do NOT run these; load the SQL through PDO instead (Phase 02 adds the script):
+#   sqlite3 data/tracker.sqlite < schema.sql
+#   sqlite3 data/tracker.sqlite < seed.sql
 
 # Syntax-check a file (use liberally — it's instant)
 php -l src/functions.php
@@ -193,6 +207,8 @@ A phase is `done` only when **all** of these hold:
 - [ ] Its **Verify** section has been executed and every item passes.
 - [ ] `php -l` is clean on every file you touched.
 - [ ] The app loads with `error_reporting(E_ALL)` and emits **zero** warnings or notices.
+- [ ] Every function written has a PHPDoc block, and every comment explains *why*, not *what*.
+- [ ] The §5 checklist in [`docs/code-standards.md`](./docs/code-standards.md) passes for every file touched.
 - [ ] No non-negotiable from §6 is violated.
 - [ ] `PROGRESS.md` is updated per §5, including a Log entry.
 
@@ -201,7 +217,10 @@ A phase is `done` only when **all** of these hold:
 ## 10. Anti-Patterns — Do Not Do These
 
 - ❌ Introducing a `Transaction` class, a `Repository` interface, or a DI container. **Not yet** — the brief defers this on purpose.
+- ❌ Following the `.commandcode/skills/php-pro/` skill's architecture advice — DTOs, service classes, DI, namespaces, enums, PHPStan level 9. Take only its language-level rules; see [`docs/code-standards.md`](./docs/code-standards.md) §4.
 - ❌ Adding Composer packages beyond PHPUnit. No router, no ORM, no template engine, no validation library.
+- ❌ Leaving a function without a DocBlock, or writing comments that narrate *what* the code does.
+- ❌ Using a deprecated function, `global`, `@`, or leaving `var_dump()` in committed code.
 - ❌ Building a front controller / router. One `.php` file per page.
 - ❌ Rewriting a phase's approach because you prefer it. If the plan is wrong, say so and ask — don't silently diverge.
 - ❌ Working ahead into a later phase "while you're in there". Each phase ends in a runnable, verified state.
