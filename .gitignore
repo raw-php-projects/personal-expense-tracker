@@ -1,0 +1,8 @@
+/data/*.sqlite
+/vendor/
+.env
+.DS_Store
+Thumbs.db
+
+# Command Code tooling state (agent skills, local settings) - not project source
+.commandcode/
