@@ -10,6 +10,8 @@ deliberate: see [`ProjectBrief.md`](./ProjectBrief.md).
 This project is built in phases. Live status lives in [`PROGRESS.md`](./PROGRESS.md).
 The plan itself is in [`plans/`](./plans), with one file per phase in [`plans/phases/`](./plans/phases).
 
+`main` is frozen at the current released state — all ongoing work happens on `dev`.
+
 ## Requirements
 
 - PHP 8.1 or newer, with the `pdo_sqlite` and `sqlite3` extensions **enabled**

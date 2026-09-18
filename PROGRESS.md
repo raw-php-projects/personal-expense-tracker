@@ -102,3 +102,4 @@ Follow these rules exactly. They are what keeps this file honest.
 | 2026-09-17 | 00 | done — first commit `1b3f645`; PHP 8.3.14 + SQLite 3.40.0 verified end to end |
 | 2026-09-18 | 01 | started |
 | 2026-09-18 | 01 | done — pure `calculations.php`, `config.php`, `money()`, `e()` escaped and hardened; Verify passed 10/10 |
+| 2026-09-18 | — | Published to github.com/raw-php-projects/personal-expense-tracker. `main` holds the end-of-Phase-01 snapshot; all further work moves to `dev`. |

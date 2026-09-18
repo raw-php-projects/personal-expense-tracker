@@ -68,6 +68,14 @@ For every unit of work:
 
 **Never skip a phase. Never work on two phases at once.**
 
+### Branches
+
+- **`main` is frozen.** It holds the end-of-phase snapshot and receives nothing further. Never commit to it, never push to it.
+- **All work happens on `dev`.** Commit there and push with `git push origin dev`.
+- Never force-push either branch.
+- If you find yourself on `main`, switch back before committing: `git checkout dev`.
+- Remote: <https://github.com/raw-php-projects/personal-expense-tracker>
+
 ---
 
 ## 5. Progress Tracking — `PROGRESS.md` Is Authoritative
