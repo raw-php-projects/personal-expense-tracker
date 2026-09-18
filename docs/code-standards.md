@@ -135,7 +135,7 @@ The default assumption is that **every** value from outside the process is hosti
 - **Every dynamic value printed into HTML goes through `e()`** — attributes and `<title>` and
   `<option>` included.
 - **Escape for the correct context.** They are not interchangeable:
-  - HTML → `e()` (`htmlspecialchars` with `ENT_QUOTES`)
+  - HTML → `e()` (`htmlspecialchars` with `ENT_QUOTES | ENT_SUBSTITUTE`)
   - URL query → `urlencode()` / `http_build_query()`
   - CSV → quote-prefix cells starting with `=`, `+`, `-`, `@` (CSV injection)
   - Shell → `escapeshellarg()` (and prefer not to shell out at all)

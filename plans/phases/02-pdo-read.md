@@ -15,9 +15,9 @@ tables · primary keys · `SELECT` · `WHERE` · `ORDER BY` · `JOIN` · PDO con
 ## Files Produced
 
 ```
-src/config.php          # returns a config array
+src/config.php          # created in Phase 01 — 2.1 adds db_path to it
 src/db.php              # PDO factory function
-src/functions.php       # e() and other shared helpers
+src/functions.php       # created in Phase 01 — e() lives here; new helpers join it
 schema.sql              # CREATE TABLE statements
 seed.sql                # sample categories + transactions
 public/transactions.php # read-only list page
@@ -26,12 +26,16 @@ data/tracker.sqlite     # created at runtime (gitignored)
 
 ## Sub-phases
 
-### 2.1 — `src/config.php`
+### 2.1 — Extend `src/config.php`
 
-- [ ] Return an **array** (don't define constants yet): `db_path`, `timezone`, `app_name`
+> `config.php` already exists from Phase 01 (sub-phase 1.7), holding `app_name`, `currency_code`, and
+> `currency_symbol`, read through the `config()` accessor in `functions.php`. **Add to it — don't
+> recreate it.** It still returns an array; no constants.
+
+- [ ] Add `db_path` to the existing array
 - [ ] `db_path` must be absolute and outside the docroot: `__DIR__ . '/../data/tracker.sqlite'`
-- [ ] Set the timezone with `date_default_timezone_set()` in one place
-- [ ] Create the file `data/` if it doesn't exist, or fail with a clear message
+- [ ] Keep the timezone in config too, so there is one place for settings rather than two
+- [ ] Create the `data/` directory if it doesn't exist, or fail with a clear message
 
 ### 2.2 — `schema.sql`
 
@@ -62,12 +66,10 @@ data/tracker.sqlite     # created at runtime (gitignored)
 - [ ] Execute `PRAGMA foreign_keys = ON` on connect
 - [ ] Confirm a bad path throws a `PDOException` rather than failing silently
 
-### 2.5 — `src/functions.php`
+### 2.5 — `public/transactions.php`
 
-- [ ] `function e(?string $value): string` wrapping `htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8')`
-- [ ] This is the **only** sanctioned way to print dynamic data. Commit to it now.
-
-### 2.6 — `public/transactions.php`
+> `src/functions.php` and its `e()` helper were created in Phase 01 (sub-phase 1.5) — this phase only
+> *uses* them.
 
 - [ ] `require` config → db → functions → calculations (in that order)
 - [ ] Call `db()` and run a prepared `SELECT` joining `categories`, `ORDER BY occurred_on DESC, id DESC`

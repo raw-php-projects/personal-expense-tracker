@@ -5,10 +5,10 @@
 
 | | |
 |---|---|
-| **Next phase to start** | `01` — PHP Language Playground |
+| **Next phase to start** | `02` — PDO Connection & Reading |
 | **Currently working on** | *nothing* |
-| **Overall** | 1 / 12 phases done |
-| **Last updated** | 2026-09-17 |
+| **Overall** | 2 / 12 phases done |
+| **Last updated** | 2026-09-18 |
 
 ---
 
@@ -17,7 +17,7 @@
 | # | Phase | Status | Started | Completed |
 |---|-------|--------|---------|-----------|
 | 00 | [Environment & Skeleton](./plans/phases/00-setup.md) | `done` | 2026-09-17 | 2026-09-17 |
-| 01 | [PHP Language Playground](./plans/phases/01-language-playground.md) | `not started` | — | — |
+| 01 | [PHP Language Playground](./plans/phases/01-language-playground.md) | `done` | 2026-09-18 | 2026-09-18 |
 | 02 | [PDO Connection & Reading](./plans/phases/02-pdo-read.md) | `not started` | — | — |
 | 03 | [Forms, `$_POST` & Validation](./plans/phases/03-forms-create.md) | `not started` | — | — |
 | 04 | [Categories](./plans/phases/04-categories.md) | `not started` | — | — |
@@ -100,3 +100,5 @@ Follow these rules exactly. They are what keeps this file honest.
 | 2026-09-17 | — | Phase files moved into `plans/phases/`. Links updated in `plans/README.md`, `PROGRESS.md`, `AGENT.md`, and all 12 phase files. |
 | 2026-09-17 | 00 | started |
 | 2026-09-17 | 00 | done — first commit `1b3f645`; PHP 8.3.14 + SQLite 3.40.0 verified end to end |
+| 2026-09-18 | 01 | started |
+| 2026-09-18 | 01 | done — pure `calculations.php`, `config.php`, `money()`, `e()` escaped and hardened; Verify passed 10/10 |

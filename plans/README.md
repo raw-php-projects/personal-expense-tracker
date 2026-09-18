@@ -68,9 +68,9 @@ personal-expense-tracker/
 │   └── assets/style.css
 ├── src/                        # NOT web-accessible
 │   ├── bootstrap.php           # Phase 09: one require that wires everything
-│   ├── config.php              # Phase 02: config array (db path, tz, app name)
+│   ├── config.php              # Phase 01: app name, currency; Phase 02 adds db_path
 │   ├── db.php                  # Phase 02: PDO factory
-│   ├── functions.php           # Phase 02: e(), redirect(), flash(), csrf helpers
+│   ├── functions.php           # Phase 01: e(); later phases add redirect(), flash(), csrf
 │   ├── validation.php          # Phase 03: parseAmountToCents(), validate*
 │   ├── calculations.php        # Phase 01: PURE functions (no I/O, unit-testable)
 │   ├── filters.php             # Phase 06: $_GET parsing + query builder
@@ -171,7 +171,7 @@ Full detail in [`docs/code-standards.md`](../docs/code-standards.md).
 - **Escaping:** every dynamic value printed to HTML goes through `e()`. No exceptions.
 - **SQL:** prepared statements for all values. Dynamic identifiers — only from a hardcoded whitelist array.
 - **Validation:** server-side always; client-side attributes are a convenience, never a gate.
-- **Money:** store cents; convert at the edges (form input → cents, display → `formatMoney`).
+- **Money:** store cents; convert at the edges (form input → cents, display → `format_money`).
 - **Dates:** store `Y-m-d`; compare months with `strftime('%Y-%m', occurred_on)`; set one timezone in `config.php`.
 - **Destructive actions:** POST only, CSRF-verified, redirect after.
 - **File layout:** `src/` for logic, `public/` for views, `data/` for the DB file.

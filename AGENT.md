@@ -40,6 +40,7 @@ Do not start writing code before doing 1–4.
 | See the DB schema | [`plans/README.md`](./plans/README.md) §3, then `schema.sql` |
 | Know a URL's purpose | [`plans/README.md`](./plans/README.md) §4 Route Map |
 | Find a rule I must follow | [`plans/README.md`](./plans/README.md) §5 + this file §6 |
+| Change an **app-wide setting** (currency, app name) | `src/config.php`, read via `config()` |
 | Change a **page** | `public/*.php` — one file per page |
 | Change **business logic** | `src/calculations.php` (pure), `src/validation.php` |
 | Change **SQL** | `src/repositories.php` (Phase 09+), `src/db.php`, `src/filters.php` |
@@ -120,10 +121,10 @@ These are the rules that make this codebase what it is. **Break one and you've b
 | # | Rule | Why |
 |---|---|---|
 | 1 | **No OOP. No classes. No frameworks.** Plain functions and files. | The brief explicitly says to experience procedural PHP's limits before abstracting. A class here is a defect, not an improvement. |
-| 2 | **Every dynamic value printed to HTML goes through `e()`.** | XSS. `e()` wraps `htmlspecialchars(..., ENT_QUOTES, 'UTF-8')`. |
+| 2 | **Every dynamic value printed to HTML goes through `e()`.** | XSS. `e()` wraps `htmlspecialchars(..., ENT_QUOTES \| ENT_SUBSTITUTE, 'UTF-8')`. |
 | 3 | **Every SQL value is a `:placeholder`.** Only whitelist-validated identifiers may be interpolated. | SQL injection. See `filters.php` for the one place this is subtle. |
 | 4 | **Validate and escape at the correct layer.** Escape on *output*, validate on *input*. Never escape on input. | Escaping on input double-encodes and corrupts stored data. |
-| 5 | **Money is an integer number of cents.** Never a float. | `0.1 + 0.2 !== 0.3`. Conversion happens only at the edges via `parseAmountToCents()` / `formatMoney()`. |
+| 5 | **Money is an integer number of cents.** Never a float. | `0.1 + 0.2 !== 0.3`. Conversion happens only at the edges via `parse_amount_to_cents()` / `format_money()`. |
 | 6 | **`src/calculations.php` stays pure.** No `$pdo`, no `$_POST`, no `$_GET`, no `echo`, no `date()` defaults, no `require`. | It's the unit-test target. Impurity here costs you Phase 10. |
 | 7 | **Destructive actions are POST-only and CSRF-verified.** | A `GET` delete can be fired by an `<img>` tag. |
 | 8 | **Every POST handler redirects on completion.** | Prevents duplicate rows on refresh. |
@@ -149,6 +150,7 @@ Full detail in [`docs/code-standards.md`](./docs/code-standards.md).
 - **Type declarations:** every function declares parameter **and** return types.
 - **Strict types:** `declare(strict_types=1);` as the first statement of every `.php` file.
 - **Formatting:** PSR-12. 4 spaces. No tabs.
+- **Money and currency:** never hardcode a currency symbol. Print amounts with `money()`, which reads `config('currency_symbol')`. `format_money()` is the pure number formatter — it takes the symbol as an argument and must stay free of configuration so `calculations.php` remains testable on its own.
 - **Page shape (Phase 09+):** every page in `public/` is exactly:
 
   ```php
