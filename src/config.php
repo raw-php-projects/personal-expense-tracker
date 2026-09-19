@@ -25,6 +25,12 @@ return [
     // had just ended.
     'timezone' => 'Asia/Dhaka',
 
+    // Absolute, and deliberately outside public/ — the docroot. A database file
+    // sitting in the web root can be downloaded by anyone who guesses its name,
+    // and this one holds every transaction. __DIR__ is this file's own directory,
+    // so the path still resolves when a script runs from somewhere else.
+    'db_path' => __DIR__ . '/../data/tracker.sqlite',
+
     'currency_code'   => 'USD',
     'currency_symbol' => '$',
 ];

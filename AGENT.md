@@ -140,7 +140,7 @@ These are the rules that make this codebase what it is. **Break one and you've b
 | 10 | **`session_start()` before any output.** | Even a stray newline breaks it. |
 | 11 | **`data/` stays outside the docroot.** The docroot is `public/`. | The SQLite file must not be fetchable over HTTP. |
 | 12 | **Every function has a PHPDoc block** — imperative summary, `@param`, `@return`, `@throws` where relevant. | This is a learning artefact; the *why* matters as much as the code. See [`docs/code-standards.md`](./docs/code-standards.md) §1. |
-| 13 | **Comments explain *why*, never *what*.** No line-by-line narration. | The code already says what it does. A comment earns its place by recording a decision, a constraint, or a trap. |
+| 13 | **Every comment must leave a reader knowing what the block is for and how it works — in one or two lines.** Record the decision, the constraint, or the trap; never narrate syntax. | Plain and precise beats clever. If a block needs a longer explanation than that, it is doing too much. See [`docs/code-standards.md`](./docs/code-standards.md) §1. |
 | 14 | **Secure by default** — validate every input at the boundary, escape on output, allowlist rather than blocklist, fail closed. | See [`docs/code-standards.md`](./docs/code-standards.md) §2. |
 | 15 | **Write modern PHP** — target the installed version (8.3.14): `strict_types`, typed signatures, `match`, nullsafe, `str_contains`, `never`. No deprecated functions. | Language features now; class-based features (enums, `readonly`, attributes) wait for the OOP follow-up. See [`docs/code-standards.md`](./docs/code-standards.md) §3. |
 

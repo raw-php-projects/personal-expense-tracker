@@ -5,10 +5,10 @@
 
 | | |
 |---|---|
-| **Next phase to start** | `02` — PDO Connection & Reading |
+| **Next phase to start** | `03` — Forms, `$_POST` & Validation |
 | **Currently working on** | *nothing* |
-| **Overall** | 2 / 12 phases done |
-| **Last updated** | 2026-09-18 |
+| **Overall** | 3 / 12 phases done |
+| **Last updated** | 2026-09-19 |
 
 ---
 
@@ -18,7 +18,7 @@
 |---|-------|--------|---------|-----------|
 | 00 | [Environment & Skeleton](./plans/phases/00-setup.md) | `done` | 2026-09-17 | 2026-09-17 |
 | 01 | [PHP Language Playground](./plans/phases/01-language-playground.md) | `done` | 2026-09-18 | 2026-09-18 |
-| 02 | [PDO Connection & Reading](./plans/phases/02-pdo-read.md) | `not started` | — | — |
+| 02 | [PDO Connection & Reading](./plans/phases/02-pdo-read.md) | `done` | 2026-09-18 | 2026-09-19 |
 | 03 | [Forms, `$_POST` & Validation](./plans/phases/03-forms-create.md) | `not started` | — | — |
 | 04 | [Categories](./plans/phases/04-categories.md) | `not started` | — | — |
 | 05 | [Dashboard: Monthly Totals](./plans/phases/05-dashboard.md) | `not started` | — | — |
@@ -103,3 +103,5 @@ Follow these rules exactly. They are what keeps this file honest.
 | 2026-09-18 | 01 | started |
 | 2026-09-18 | 01 | done — pure `calculations.php`, `config.php`, `money()`, `e()` escaped and hardened; Verify passed 10/10 |
 | 2026-09-18 | — | Published to github.com/raw-php-projects/personal-expense-tracker. `main` holds the end-of-Phase-01 snapshot; all further work moves to `dev`. |
+| 2026-09-18 | 02 | started |
+| 2026-09-19 | 02 | done — schema + seed through PDO, `db()` with foreign keys on, read-only list with totals; Verify passed 13/13 |

@@ -75,6 +75,9 @@ all views            # escaping audit
 - [ ] Send `X-Content-Type-Options: nosniff` and a basic `Content-Security-Policy` (`default-src 'self'` — you may need `'unsafe-inline'` for the inline percentage bar; prefer moving that to a class or CSS variable)
 - [ ] `Referrer-Policy: same-origin`
 - [ ] Turn **off** `display_errors` for anything resembling production; log instead
+- [ ] Confirm a failing page answers **500**, not 200. Found during Phase 02: a page that throws returns
+      500 on its own, but returns 200 once `ini_set('display_errors', '1')` has run — so every page here
+      currently reports success while showing an error. Verify the status code, not just the body.
 - [ ] Confirm no page leaks a raw `PDOException` message or file path to the browser
 - [ ] Confirm `data/tracker.sqlite` is outside the docroot
 

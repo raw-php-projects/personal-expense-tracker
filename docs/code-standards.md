@@ -61,17 +61,28 @@ function find_transaction(int $id): ?array
 {
 ```
 
-### Explain *why*, not *what*
+### Comments explain the block — briefly
 
-The code already says what it does. A comment earns its place by recording a **decision**, a
-**constraint**, or a **trap**:
+A comment should leave **any** reader knowing what the block is for and how it works. In practice that
+means recording the decision, the constraint, or the trap — the thing the code itself cannot say.
+
+Keep it to one or two lines. If a block needs more than that to be understandable, it is doing too
+much — extract a named function and comment that instead.
+
+**Write:**
 
 - ✅ `// Integer maths, not (int)($raw * 100) — that gives 1998 for "19.99".`
 - ✅ `// SQLite has no functional indexes, so this WHERE can't use idx_tx_occurred_on.`
 - ✅ `// hash_equals, not ===, so the comparison is timing-safe.`
-- ❌ `// loop over the transactions`
-- ❌ `// increment the counter`
-- ❌ `// the amount field`
+- ✅ `// Anchored to the first of the month before subtracting: PHP rolls 31 March`
+  `// back to 3 March, because 29 February does not exist. Day 1 always does.`
+
+**Don't:**
+
+- ❌ `// loop over the transactions` — restates the code
+- ❌ `// increment the counter` — restates the code
+- ❌ `// the amount field` — adds nothing
+- ❌ A ten-line paragraph above a three-line loop
 
 ### Inside a function
 

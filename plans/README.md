@@ -80,6 +80,8 @@ personal-expense-tracker/
 │       ├── header.php
 │       ├── footer.php
 │       └── transaction-form-fields.php
+├── bin/
+│   └── init-db.php             # Phase 02: builds data/tracker.sqlite from the .sql files
 ├── data/
 │   └── tracker.sqlite          # gitignored
 ├── tests/
